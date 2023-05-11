@@ -1,10 +1,11 @@
-var React    = require('react');
-var ReactDOM = require('react-dom');
+var React = require("react");
+var ReactDOM = require("react-dom");
 
-var ApplicationContainer = require('./components/ApplicationContainer.react');
+var ApplicationContainer = require("./components/ApplicationContainer.react");
 
-require('../public/css/base.less');
+require("../public/css/base.less");
 
 ReactDOM.render(
-  <ApplicationContainer />, document.getElementById('application')
+  <ApplicationContainer />,
+  document.getElementById("application")
 );
