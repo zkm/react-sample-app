@@ -10,7 +10,7 @@ function ApplicationContainer() {
   const addItem = (itemText, isPriority) => {
     const priorityClass = isPriority ? "high-priority" : "normal-priority";
     const newItem = { text: itemText, styleClass: priorityClass };
-    setItems(prevItems => [...prevItems, newItem]);
+    setItems(prevItems => prevItems.concat(newItem));
   };
 
   const removeItem = (item) => {

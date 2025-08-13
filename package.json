@@ -9,11 +9,11 @@
   },
   "scripts": {
     "browserify": "browserify src/react_sample.js | uglifyjs > public/js/react_sample.js",
-    "build": "mkdir -p public/js && npm run browserify",
-    "ship": "NODE_ENV=production npm run build",
+    "build": "mkdir -p public/js && yarn browserify",
+    "ship": "NODE_ENV=production yarn build",
     "test": "jest",
     "test-watch": "jest --watch",
-    "server": "npm run build && node server.js"
+    "server": "yarn build && node server.js"
   },
   "resolutions": {
     "tmp": ">=0.2.4"
@@ -29,7 +29,7 @@
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "browserify": "^17.0.1",
-    "express": "^5.1.0",
+    "express": "^4.19.2",
     "jasmine": "^5.9.0",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",

@@ -1,17 +1,51 @@
 # React Sample App
 
-This repository is an example to-do list app built using React and ReactDOM.
+This repository is an example to-do list app built using modern React (v19), ReactDOM, Jest, and React Testing Library.
 
-### Requirements
+## Requirements
 
-This application requires `node` and `npm` to be present in order to build. After cloning the repository, run `npm install` in the application's root directory.
+- Node.js (v18 or newer recommended)
+- Yarn (recommended; install via `npm install -g yarn`)
 
-### Running
+After cloning the repository, run:
 
-To try out the application in a browser, run `npm run server` and navigate to `http://localhost:3000/`. STDOUT should include a log of all requests made to the express development server defined in `server.js`.
+```
+yarn install
+```
 
-### Tests
+## Running
 
-The test suite can be run in two ways. The first is via the testem UI: run `npm run test-watch` and go to the provided url in your browser. Testem will continue to run the tests upon file changes via the page open in your browser.
+To start the development server and build the app, run:
 
-The second method of running the tests is via `npm test`. This will run the entire suite once and report the results to your shell on STDOUT.
+```
+yarn server
+```
+
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
+
+The server logs all requests to STDOUT. The Express server is defined in `server.js`.
+
+## Testing
+
+All tests use Jest and React Testing Library.
+
+To run all tests once:
+
+```
+yarn test
+```
+
+To run tests in watch mode:
+
+```
+yarn test-watch
+```
+
+Test files are located in `test/components/` and cover all major app functionality.
+
+## Modernization Notes
+
+- All React components use functional components and hooks.
+- The app is compatible with React 19 and modern browsers.
+- Legacy dependencies (PhantomJS, Jasmine, old React APIs) have been removed.
+- The build uses Browserify and UglifyJS for bundling.
