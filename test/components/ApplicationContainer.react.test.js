@@ -1,44 +1,54 @@
-var React = require("react");
-var TestUtils = require("react-addons-test-utils");
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import ApplicationContainer from "../../src/components/ApplicationContainer.react";
 
-var ApplicationContainer = require("../../src/components/ApplicationContainer.react");
-
-describe("<ApplicationContainer />", function () {
-  it("produces the correct child context", function () {
-    var app = TestUtils.renderIntoDocument(<ApplicationContainer />);
-    expect(app.getChildContext()).toEqual({ removeItem: app.removeItem });
+describe("<ApplicationContainer />", () => {
+  it("renders the application container", () => {
+    render(<ApplicationContainer />);
+    expect(screen.getByTestId("app-container")).toBeInTheDocument();
   });
 
-  it("starts with an empty todo list", function () {
-    var app = TestUtils.renderIntoDocument(<ApplicationContainer />);
-    expect(app.state.items).toEqual([]);
+  it("starts with an empty todo list", () => {
+    render(<ApplicationContainer />);
+    const todoList = screen.getByTestId("todo-list");
+    expect(todoList).toBeInTheDocument();
+    expect(todoList.children).toHaveLength(0);
   });
 
-  it("adds new items", function () {
-    var app = TestUtils.renderIntoDocument(<ApplicationContainer />);
-    app.addItem("fake-text", true);
-
-    expect(app.state.items).toEqual([
-      {
-        text: "fake-text",
-        styleClass: "high-priority",
-      },
-    ]);
+  it("adds new items", () => {
+    render(<ApplicationContainer />);
+    
+    const textInput = screen.getByTestId("text-input");
+    const priorityCheckbox = screen.getByTestId("priority-checkbox");
+    const form = screen.getByTestId("todo-form");
+    
+    fireEvent.change(textInput, { target: { value: "fake-text" } });
+    fireEvent.click(priorityCheckbox);
+    fireEvent.submit(form);
+    
+    expect(screen.getByTestId("item-text")).toHaveTextContent("fake-text");
+    expect(screen.getByTestId("todo-item")).toHaveClass("high-priority");
   });
 
-  it("removes items", function () {
-    var app = TestUtils.renderIntoDocument(<ApplicationContainer />);
-    app.addItem("fake-text", true);
-    app.addItem("more-fake-text", false);
-
-    app.removeItem(app.state.items[0]);
-
-    expect(app.state.items.length).toEqual(1);
-    expect(app.state.items).toEqual([
-      {
-        text: "more-fake-text",
-        styleClass: "normal-priority",
-      },
-    ]);
+  it("removes items", () => {
+    render(<ApplicationContainer />);
+    
+    // Add an item first
+    const textInput = screen.getByTestId("text-input");
+    const form = screen.getByTestId("todo-form");
+    
+    fireEvent.change(textInput, { target: { value: "fake-text" } });
+    fireEvent.submit(form);
+    
+    // Verify it was added
+    expect(screen.getByTestId("item-text")).toHaveTextContent("fake-text");
+    
+    // Remove the item
+    const doneForm = screen.getByTestId("done-form");
+    fireEvent.submit(doneForm);
+    
+    // Verify it was removed
+    const todoList = screen.getByTestId("todo-list");
+    expect(todoList.children).toHaveLength(0);
   });
 });

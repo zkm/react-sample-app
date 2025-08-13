@@ -1,19 +1,13 @@
-var React = require("react");
-var TestUtils = require("react-addons-test-utils");
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import TodoList from "../../src/components/TodoList.react";
 
-var TodoList = require("../../src/components/TodoList.react");
-var TodoListItem = require("../../src/components/TodoListItem.react");
+describe("<TodoList />", () => {
+  it("renders a todo item", () => {
+    const fakeItems = [{ text: "fake-text" }];
+    render(<TodoList items={fakeItems} />);
 
-describe("<TodoList />", function () {
-  it("renders a todo item", function () {
-    var fakeItems = [{ text: "fake-text" }];
-    var list = TestUtils.renderIntoDocument(<TodoList items={fakeItems} />);
-
-    var renderedItem = TestUtils.findRenderedComponentWithType(
-      list,
-      TodoListItem
-    );
-
-    expect(renderedItem.props.item.text).toEqual("fake-text");
+    expect(screen.getByTestId("todo-list")).toBeInTheDocument();
+    expect(screen.getByTestId("item-text")).toHaveTextContent("fake-text");
   });
 });

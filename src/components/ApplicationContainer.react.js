@@ -1,47 +1,29 @@
-var React = require("react");
+const React = require("react");
 
-var ApplicationHeader = require("./ApplicationHeader.react");
-var TodoList = require("./TodoList.react");
-var ItemForm = require("./ItemForm.react");
+const ApplicationHeader = require("./ApplicationHeader.react");
+const TodoList = require("./TodoList.react");
+const ItemForm = require("./ItemForm.react");
 
-var ApplicationContainer = React.createClass({
-  childContextTypes: {
-    removeItem: React.PropTypes.func,
-  },
+function ApplicationContainer() {
+  const [items, setItems] = React.useState([]);
 
-  getChildContext: function () {
-    return { removeItem: this.removeItem };
-  },
+  const addItem = (itemText, isPriority) => {
+    const priorityClass = isPriority ? "high-priority" : "normal-priority";
+    const newItem = { text: itemText, styleClass: priorityClass };
+    setItems(prevItems => [...prevItems, newItem]);
+  };
 
-  getInitialState: function () {
-    return { items: [] };
-  },
+  const removeItem = (item) => {
+    setItems(prevItems => prevItems.filter(i => i !== item));
+  };
 
-  addItem: function (itemText, isPriority) {
-    var priorityClass = isPriority ? "high-priority" : "normal-priority";
-    var newItem = { text: itemText, styleClass: priorityClass };
-
-    var newItems = this.state.items.concat(newItem);
-    this.setState({ items: newItems });
-  },
-
-  removeItem: function (item) {
-    var newItems = this.state.items.slice();
-    var deleteIndex = newItems.indexOf(item);
-    newItems.splice(deleteIndex, 1);
-
-    this.setState({ items: newItems });
-  },
-
-  render: function () {
-    return (
-      <div className="react-sample-container">
-        <ApplicationHeader />
-        <TodoList items={this.state.items} />
-        <ItemForm addItem={this.addItem} />
-      </div>
-    );
-  },
-});
+  return (
+    <div className="react-sample-container" data-testid="app-container">
+      <ApplicationHeader />
+      <TodoList items={items} onRemoveItem={removeItem} />
+      <ItemForm addItem={addItem} />
+    </div>
+  );
+}
 
 module.exports = ApplicationContainer;

@@ -11,30 +11,43 @@
     "browserify": "browserify src/react_sample.js | uglifyjs > public/js/react_sample.js",
     "build": "mkdir -p public/js && npm run browserify",
     "ship": "NODE_ENV=production npm run build",
-    "test": "testem ci -l phantomjs",
-    "test-watch": "testem",
+    "test": "jest",
+    "test-watch": "jest --watch",
     "server": "npm run build && node server.js"
   },
+  "resolutions": {
+    "tmp": ">=0.2.4"
+  },
   "dependencies": {
-    "react": "~15.2.1",
-    "react-dom": "~15.2.1"
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "browserify": "~13.0.1",
-    "express": "~4.14.0",
-    "jasmine": "~2.4.1",
-    "jasmine-node": "~1.14.5",
-    "node-lessify": "~0.1.4",
-    "react-addons-test-utils": "~15.2.1",
-    "reactify": "~1.1.1",
-    "testem": "~1.10.0-0",
-    "uglify-js": "~2.7.0",
-    "phantomjs": "~2.1.7"
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "browserify": "^17.0.1",
+    "express": "^5.1.0",
+    "jasmine": "^5.9.0",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "node-lessify": "^0.2.0",
+    "reactify": "^1.1.1",
+    "testem": "^3.16.0",
+    "uglify-js": "^3.19.3"
   },
   "browserify": {
     "transform": [
       "reactify",
       "node-lessify"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
     ]
   }
 }

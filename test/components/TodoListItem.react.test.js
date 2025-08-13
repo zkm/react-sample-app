@@ -1,34 +1,30 @@
-var React = require("react");
-var TestUtils = require("react-addons-test-utils");
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import TodoListItem from "../../src/components/TodoListItem.react";
 
-var TodoListItem = require("../../src/components/TodoListItem.react");
-
-describe("<TodoListItem />", function () {
-  it("extracts the text of an item", function () {
-    var item = TestUtils.renderIntoDocument(
-      <TodoListItem item={{ text: "sample-text" }} />
-    );
-
-    expect(item.getItemText()).toEqual("sample-text");
+describe("<TodoListItem />", () => {
+  it("displays the text of an item", () => {
+    const item = { text: "sample-text" };
+    render(<TodoListItem item={item} />);
+    expect(screen.getByTestId("item-text")).toHaveTextContent("sample-text");
   });
 
-  it("extracts the styling class of an item", function () {
-    var item = TestUtils.renderIntoDocument(
-      <TodoListItem item={{ styleClass: "sample-style" }} />
-    );
-
-    expect(item.getItemClass()).toEqual("sample-style");
+  it("applies the styling class of an item", () => {
+    const item = { text: "sample-text", styleClass: "sample-style" };
+    render(<TodoListItem item={item} />);
+    const todoItem = screen.getByTestId("todo-item");
+    expect(todoItem).toHaveClass("todo-item", "sample-style");
   });
 
-  it("marks items as done", function () {
-    var fakeItem = { text: "fake-text", styleClass: "fake-style" };
+  it("marks items as done", () => {
+    const fakeItem = { text: "fake-text", styleClass: "fake-style" };
+    const onRemoveItem = jest.fn();
+    
+    render(<TodoListItem item={fakeItem} onRemoveItem={onRemoveItem} />);
+    
+    const doneForm = screen.getByTestId("done-form");
+    fireEvent.submit(doneForm);
 
-    var item = TestUtils.renderIntoDocument(<TodoListItem item={fakeItem} />);
-
-    var removeSpy = jasmine.createSpy("removeSpy");
-    item.context.removeItem = removeSpy;
-    item.onMarkDone({ preventDefault: function () {} });
-
-    expect(item.context.removeItem).toHaveBeenCalledWith(fakeItem);
+    expect(onRemoveItem).toHaveBeenCalledWith(fakeItem);
   });
 });

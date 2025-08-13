@@ -1,33 +1,29 @@
-var React = require("react");
+const React = require("react");
 
-var TodoListItem = React.createClass({
-  contextTypes: {
-    removeItem: React.PropTypes.func,
-  },
+function TodoListItem({ item, onRemoveItem }) {
+  const getItemText = () => {
+    return item.text;
+  };
 
-  getItemText: function () {
-    return this.props.item.text;
-  },
+  const getItemClass = () => {
+    return item.styleClass || "";
+  };
 
-  getItemClass: function () {
-    return this.props.item.styleClass;
-  },
-
-  onMarkDone: function (event) {
+  const onMarkDone = (event) => {
     event.preventDefault();
-    this.context.removeItem(this.props.item);
-  },
+    if (onRemoveItem) {
+      onRemoveItem(item);
+    }
+  };
 
-  render: function () {
-    return (
-      <div className={"todo-item " + this.getItemClass()}>
-        {this.getItemText()}
-        <form onSubmit={this.onMarkDone}>
-          <input ref="doneButton" type="submit" value="Done" />
-        </form>
-      </div>
-    );
-  },
-});
+  return (
+    <div className={`todo-item ${getItemClass()}`} data-testid="todo-item">
+      <span data-testid="item-text">{getItemText()}</span>
+      <form onSubmit={onMarkDone} data-testid="done-form">
+        <input type="submit" value="Done" data-testid="done-button" />
+      </form>
+    </div>
+  );
+}
 
 module.exports = TodoListItem;
