@@ -23,7 +23,8 @@ app.use(function requestLogger(request, response, next) {
   next();
 });
 
-app.get("/*", function (req, res) {
+// Express 5 uses path-to-regexp v8; use a regex catch-all instead of "*" or "/*".
+app.get(/.*/, function (req, res) {
   res.sendFile(path.join(public_path, "index.html"));
 });
 
