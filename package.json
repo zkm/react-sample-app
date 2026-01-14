@@ -9,11 +9,11 @@
   },
   "scripts": {
     "browserify": "browserify src/react_sample.js | uglifyjs > public/js/react_sample.js",
-    "build": "mkdir -p public/js && yarn browserify",
-    "ship": "NODE_ENV=production yarn build",
+    "build": "mkdir -p public/js && npm run browserify",
+    "ship": "NODE_ENV=production npm run build",
     "test": "jest",
     "test-watch": "jest --watch",
-    "server": "yarn build && node server.js"
+    "server": "npm run build && node server.js"
   },
   "resolutions": {
     "tmp": ">=0.2.4"
