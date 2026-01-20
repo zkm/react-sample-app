@@ -8,7 +8,7 @@ module.exports = {
     filename: "js/[name].bundle.js",
     chunkFilename: "js/[name].chunk.js",
     path: path.resolve(__dirname, "public"),
-    publicPath: "/",
+    publicPath: "./",
     clean: false,
   },
   devtool: "source-map",
