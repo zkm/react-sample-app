@@ -5,7 +5,8 @@ module.exports = {
   mode: "production",
   entry: path.resolve(__dirname, "src", "react_sample.js"),
   output: {
-    filename: "js/react_sample.js",
+    filename: "js/[name].bundle.js",
+    chunkFilename: "js/[name].chunk.js",
     path: path.resolve(__dirname, "public"),
     publicPath: "/",
     clean: false,
