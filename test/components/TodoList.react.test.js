@@ -4,7 +4,7 @@ import TodoList from "../../src/components/TodoList.react";
 
 describe("<TodoList />", () => {
   it("renders a todo item", () => {
-    const fakeItems = [{ text: "fake-text" }];
+    const fakeItems = [{ id: 1, text: "fake-text" }];
     render(<TodoList items={fakeItems} />);
 
     expect(screen.getByTestId("todo-list")).toBeInTheDocument();

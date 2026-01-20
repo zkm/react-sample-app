@@ -5,14 +5,15 @@ import ApplicationContainer from "../../src/components/ApplicationContainer.reac
 describe("<ApplicationContainer />", () => {
   it("renders the application container", () => {
     render(<ApplicationContainer />);
-    expect(screen.getByTestId("app-container")).toBeInTheDocument();
+    expect(screen.getByRole("main")).toBeInTheDocument();
   });
 
   it("starts with an empty todo list", () => {
     render(<ApplicationContainer />);
     const todoList = screen.getByTestId("todo-list");
     expect(todoList).toBeInTheDocument();
-    expect(todoList.children).toHaveLength(0);
+    // Empty state shows 1 paragraph, not 0 items
+    expect(screen.getByText("No todos yet. Add one to get started!")).toBeInTheDocument();
   });
 
   it("adds new items", () => {
@@ -47,8 +48,7 @@ describe("<ApplicationContainer />", () => {
     const doneForm = screen.getByTestId("done-form");
     fireEvent.submit(doneForm);
     
-    // Verify it was removed
-    const todoList = screen.getByTestId("todo-list");
-    expect(todoList.children).toHaveLength(0);
+    // Verify it was removed - empty state message should reappear
+    expect(screen.getByText("No todos yet. Add one to get started!")).toBeInTheDocument();
   });
 });

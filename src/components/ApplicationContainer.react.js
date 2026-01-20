@@ -9,16 +9,16 @@ function ApplicationContainer() {
 
   const addItem = (itemText, isPriority) => {
     const priorityClass = isPriority ? "high-priority" : "normal-priority";
-    const newItem = { text: itemText, styleClass: priorityClass };
+    const newItem = { id: Date.now(), text: itemText, styleClass: priorityClass };
     setItems(prevItems => prevItems.concat(newItem));
   };
 
-  const removeItem = (item) => {
-    setItems(prevItems => prevItems.filter(i => i !== item));
+  const removeItem = (itemId) => {
+    setItems(prevItems => prevItems.filter(i => i.id !== itemId));
   };
 
   return (
-    <div className="react-sample-container" data-testid="app-container">
+    <div className="react-sample-container" role="main" aria-label="Todo application">
       <ApplicationHeader />
       <TodoList items={items} onRemoveItem={removeItem} />
       <ItemForm addItem={addItem} />
