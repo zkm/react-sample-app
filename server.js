@@ -1,6 +1,8 @@
 var https = require("https");
 var express = require("express");
 var path = require("path");
+var { logSection, logDone, logInfo, colors } = require("./cli-utils");
+
 var app = express();
 var port = 3000;
 var public_path = path.join(__dirname, "public");
@@ -8,10 +10,12 @@ var public_path = path.join(__dirname, "public");
 var logRequest = function (request) {
   var method = request.method;
   var url = request.url;
-  var params = JSON.stringify(request.params);
-  var query = JSON.stringify(request.query);
-
-  console.log("Received request: ", [method, url, params, query].join("  "));
+  
+  // Skip favicon requests in logs
+  if (url === "/favicon.ico") return;
+  
+  var statusColor = method === "GET" ? colors.green : colors.cyan;
+  console.log(`${statusColor}${method}${colors.reset} ${colors.gray}${url}${colors.reset}`);
 };
 
 app.set("port", port);
@@ -29,5 +33,8 @@ app.get(/.*/, function (req, res) {
 });
 
 app.listen(app.get("port"), function () {
-  console.log("React sample dev server started on port " + app.get("port"));
+  logSection("React Dev Server");
+  logDone(`Server running on http://localhost:${app.get("port")}`);
+  logInfo("Press Ctrl+C to stop");
+  console.log("");
 });

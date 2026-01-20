@@ -9,8 +9,9 @@
   },
   "scripts": {
     "browserify": "browserify src/react_sample.js | uglifyjs > public/js/react_sample.js",
-    "build": "mkdir -p public/js && npm run browserify",
-    "ship": "NODE_ENV=production npm run build",
+    "dev": "webpack-dashboard -- webpack serve --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.prod.js",
+    "ship": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "test": "jest",
     "test-watch": "jest --watch",
     "server": "npm run build && node server.js"
@@ -30,15 +31,25 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.2",
+    "babel-loader": "^9.1.3",
     "browserify": "^17.0.1",
+    "css-loader": "^7.1.2",
     "express": "^5.2.1",
+    "html-webpack-plugin": "^5.6.4",
     "jasmine": "^6.0.0",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
+    "less": "^4.2.0",
+    "less-loader": "^12.1.0",
     "node-lessify": "^0.2.0",
     "reactify": "^1.1.1",
+    "style-loader": "^4.0.0",
     "testem": "^3.16.0",
-    "uglify-js": "^3.19.3"
+    "uglify-js": "^3.19.3",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dashboard": "^3.3.8",
+    "webpack-dev-server": "^5.2.0"
   },
   "browserify": {
     "transform": [
