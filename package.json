@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A sample React application",
   "author": "Zach Schneider <me@zachschneider.com>",
+  "packageManager": "yarn@4.18.0",
   "repository": {
     "type": "git",
     "url": "TBD"
@@ -17,15 +18,16 @@
     "server": "npm run build && node server.js"
   },
   "resolutions": {
-    "tmp": ">=0.2.4"
+    "tmp": ">=0.2.6",
+    "uuid": "^11.1.1"
   },
   "dependencies": {
-    "qs": "^6.14.1",
+    "qs": "^6.14.2",
     "react": "^19.2.1",
     "react-dom": "^19.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.0",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@testing-library/dom": "^10.4.1",
@@ -49,7 +51,7 @@
     "webpack": "^5.101.3",
     "webpack-cli": "^5.1.4",
     "webpack-dashboard": "^3.3.8",
-    "webpack-dev-server": "^5.2.0"
+    "webpack-dev-server": "^5.2.4"
   },
   "browserify": {
     "transform": [
